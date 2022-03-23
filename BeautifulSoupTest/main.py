@@ -20,14 +20,14 @@ html = """
 """
 
 ### Basic usage ###
-soup = BeautifulSoup(html,'lxml')
+soup = BeautifulSoup(html, 'lxml')
 print(soup.prettify())
 print(soup.title.string)
 
 
 ### Nodes selector ###
 print(soup.head)
-print(soup.p) # only the first p element can be selected.
+print(soup.p)  # only the first p element can be selected.
 
 
 ### Extract information ###
@@ -36,7 +36,7 @@ print(soup.title.name)
 
 # 2. attributes
 print(soup.p.attrs)
-print(soup.p.attrs['name']) # == print(soup.p['name'])
+print(soup.p.attrs['name'])  # == print(soup.p['name'])
 
 # 3. contents
 print(soup.p.string)      # str
@@ -48,16 +48,16 @@ print(soup.p.contents)    # list
 ### Relation selector ###
 # 1. children and descendants
 print(soup.body.children)
-for i,child in enumerate(soup.body.children):
+for i, child in enumerate(soup.body.children):
     print(i, child)
 print(soup.body.descendants)
-for i,child in enumerate(soup.body.descendants):
+for i, child in enumerate(soup.body.descendants):
     print(i, child)
 
 # 2. parent and parents
-print(soup.a.parent) # only the first a element can be selected.
+print(soup.a.parent)  # only the first a element can be selected.
 print(soup.a.parents)
-for i,parent in enumerate(soup.a.parents):
+for i, parent in enumerate(soup.a.parents):
     print(i, parent)
 
 # 3. siblings

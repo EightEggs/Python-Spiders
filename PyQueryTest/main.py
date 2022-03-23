@@ -30,7 +30,7 @@ print(doc("p"))
 doc = pq(html)
 items = doc("#container .mylist li").items()
 for item in items:
-  print(item.text())
+    print(item.text())
 
 
 ### Find nodes ###
@@ -43,7 +43,7 @@ print(doc(".item-0.active").siblings(".active"))
 
 ### EXtract information ###
 a = doc(".item-0.active a")
-print(a.attr.href) # == print(a.attr("href"))
+print(a.attr.href)  # == print(a.attr("href"))
 print(a.text())
 print(a.html())
 
