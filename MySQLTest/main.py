@@ -27,7 +27,7 @@ data = {
     'age': 20
 }
 keys = ','.join(data.keys())
-vals = ','.join(['%s']*len(data))
+vals = ','.join(['%s'] * len(data))
 sql = f"INSERT INTO students({keys}) VALUES({vals})"
 try:
     if cur.execute(sql, tuple(data.values())):
@@ -45,11 +45,11 @@ data = {
     'age': 21
 }
 keys = ','.join(data.keys())
-vals = ','.join(['%s']*len(data))
+vals = ','.join(['%s'] * len(data))
 sql = f"INSERT INTO students({keys}) VALUES ({vals}) ON DUPLICATE KEY UPDATE "
 upd = ','.join('{key}=%s'.format(key=key) for key in data)
 try:
-    if cur.execute(sql+upd, tuple(data.values())*2):
+    if cur.execute(sql + upd, tuple(data.values()) * 2):
         db.commit()
         print(f'Execute `{sql+upd}` successful.')
 except:

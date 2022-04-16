@@ -27,9 +27,9 @@ print(result.inserted_id)  # a unique _id
 result = co.find_one({'name': 'Chihara'})
 print(result)  # a dict
 results = co.find({'age': 20})
-print(results) # <pymongo.cursor.Cursor object>
+print(results)  # <pymongo.cursor.Cursor object>
 for result in results:
-    print(result) # dicts
+    print(result)  # dicts
 
 
 ### update data ###
@@ -39,8 +39,8 @@ student['age'] = 21
 result = co.update_one(condition, {'$set': student})
 print(result.matched_count, result.modified_count)
 
-condition = {'age': {'$gt': 20}} # age > 20
-result = co.update_many(condition, {'$inc':{'age':1}})
+condition = {'age': {'$gt': 20}}  # age > 20
+result = co.update_many(condition, {'$inc': {'age': 1}})
 print(result.matched_count, result.modified_count)
 
 
@@ -48,7 +48,7 @@ print(result.matched_count, result.modified_count)
 result = co.delete_one({'name': 'Chihara'})
 print(result.deleted_count)
 
-result = co.delete_many({'age':{'$lt':25}}) # age < 25
+result = co.delete_many({'age': {'$lt': 25}})  # age < 25
 print(result.deleted_count)
 
 
