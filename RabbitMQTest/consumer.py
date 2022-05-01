@@ -2,6 +2,7 @@ import pika
 import aiohttp
 import asyncio
 
+
 MAX_PRIORITY = 100
 QUEUE_NAME = 'scrape_queue'
 
@@ -18,6 +19,7 @@ async def scrape(request):
         print(f'Scraping {request}...')
         response = await session.get(request)
         await session.close()
+        # Gracefully shutdown...
         await asyncio.sleep(0.75)
         return response
     except Exception as e:
@@ -36,7 +38,6 @@ while True:
 
 
 async def main():
-
     results = await asyncio.gather(*tasks)
     for result in results:
         print(result.status)
