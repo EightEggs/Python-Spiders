@@ -80,16 +80,16 @@ async def main():
             scrape_index(page)) for page in range(1, TOTAL_PAGE + 1)]
         results = await asyncio.gather(*scrape_index_tasks)
 
-        # detail tasks
-        ids = []
-        for index_data in results:
-            if not index_data:
-                continue
-            for item in index_data.get('results'):
-                ids.append(item.get('id'))
-        scrape_detail_tasks = [asyncio.create_task(
-            scrape_detail(id)) for id in ids]
-        await asyncio.wait(scrape_detail_tasks)
+    # detail tasks
+    ids = []
+    for index_data in results:
+        if not index_data:
+            continue
+        for item in index_data.get('results'):
+            ids.append(item.get('id'))
+    scrape_detail_tasks = [asyncio.create_task(
+        scrape_detail(id)) for id in ids]
+    await asyncio.wait(scrape_detail_tasks)
 
 if __name__ == '__main__':
 
