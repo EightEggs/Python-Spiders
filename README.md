@@ -10,9 +10,9 @@ Thus the repository contains source files from the book, my own source code and 
 
 ## Environment
 
-Windows 11.
+Windows 11 Pro.
 
-Python 3.10.2 (x64).
+Python 3.10.4 (x64).
 
 ## How to Use
 
