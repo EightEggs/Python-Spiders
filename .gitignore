@@ -1,4 +1,7 @@
 .vscode
 .venv
 .userdata
+*.pyc
+
 results/
+dataset/
