@@ -8,27 +8,28 @@ from model import CNN
 
 
 def main():
-    cnn = CNN()
+    cnn = CNN().cuda()
     cnn.eval()
     cnn.load_state_dict(torch.load('best_model.pkl'))
+    
     print("load cnn net.")
 
     predict_dataloader = dataset.get_predict_data_loader()
 
     # vis = Visdom()
     for i, (images, labels) in enumerate(predict_dataloader):
-        image = images
-        vimage = Variable(image)
-        predict_label = cnn(vimage)
+        image = images.cuda()
+        vimage = Variable(image).cuda()
+        predict_label = cnn(vimage).cuda()
 
         c0 = setting.ALL_CHAR_SET[np.argmax(
-            predict_label[0, 0:setting.ALL_CHAR_SET_LEN].data.numpy())]
+            predict_label[0, 0:setting.ALL_CHAR_SET_LEN].cpu().data.numpy())]
         c1 = setting.ALL_CHAR_SET[np.argmax(
-            predict_label[0, setting.ALL_CHAR_SET_LEN:2 * setting.ALL_CHAR_SET_LEN].data.numpy())]
+            predict_label[0, setting.ALL_CHAR_SET_LEN:2 * setting.ALL_CHAR_SET_LEN].cpu().data.numpy())]
         c2 = setting.ALL_CHAR_SET[np.argmax(
-            predict_label[0, 2 * setting.ALL_CHAR_SET_LEN:3 * setting.ALL_CHAR_SET_LEN].data.numpy())]
+            predict_label[0, 2 * setting.ALL_CHAR_SET_LEN:3 * setting.ALL_CHAR_SET_LEN].cpu().data.numpy())]
         c3 = setting.ALL_CHAR_SET[np.argmax(
-            predict_label[0, 3 * setting.ALL_CHAR_SET_LEN:4 * setting.ALL_CHAR_SET_LEN].data.numpy())]
+            predict_label[0, 3 * setting.ALL_CHAR_SET_LEN:4 * setting.ALL_CHAR_SET_LEN].cpu().data.numpy())]
 
         c = '%s%s%s%s' % (c0, c1, c2, c3)
         print(c)
