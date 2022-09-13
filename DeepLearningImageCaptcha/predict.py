@@ -11,7 +11,7 @@ def main():
     cnn = CNN().cuda()
     cnn.eval()
     cnn.load_state_dict(torch.load('best_model.pkl'))
-    
+
     print("load cnn net.")
 
     predict_dataloader = dataset.get_predict_data_loader()
