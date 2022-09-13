@@ -1,18 +1,24 @@
 # 深度学习识别验证码
 
-Origin Repo: https://github.com/dee1024/pytorch-captcha-recognition.
+> Origin Repo: https://github.com/dee1024/pytorch-captcha-recognition.
 
 本项目致力于使用神经网络来识别各种验证码。
+
 
 ## 特性
 ---
 
-- __端到端，不需要做更多的图片预处理（比如图片字符切割、图片尺寸归一化、图片字符标记、字符图片特征提取）__
-- __验证码包括数字、大写字母、小写__
-- __采用自己生成的验证码来作为神经网络的训练集合、测试集合、预测集合__
-- __纯四位数字，验证码识别率高达 99.9999 %__
-- __四位数字 + 大写字符，验证码识别率约 96 %__
-- __深度学习框架pytorch + 验证码生成器ImageCaptcha__
+- 端到端，不需要做更多的图片预处理（比如图片字符切割、图片尺寸归一化、图片字符标记、字符图片特征提取）
+
+- 验证码包括数字、大写字母、小写
+
+- 采用自己生成的验证码来作为神经网络的训练集合、测试集合、预测集合
+
+- 纯四位数字，验证码识别率高达 99.9999 %
+
+- 四位数字 + 大写字符，验证码识别率约 96 %
+
+- 深度学习框架pytorch + 验证码生成器ImageCaptcha
 
 
 ## 原理
@@ -30,47 +36,58 @@ Origin Repo: https://github.com/dee1024/pytorch-captcha-recognition.
     批量输入图片集合和标记数据，大概15个Epoch后，准确率已经达到 96% 以上
 
 
-## 验证码识别率展示
----
-
-![](https://raw.githubusercontent.com/dee1024/pytorch-captcha-recognition/master/docs/number.png)
-![](https://raw.githubusercontent.com/dee1024/pytorch-captcha-recognition/master/docs/number2.png)
-
-
 ## 快速开始
 ---
 
-- __步骤一：10分钟环境安装__
+### 步骤一：10分钟环境安装
 
-    Python3.5+ 、ImageCaptcha库(pip install captcha)、 Pytorch(参考官网http://pytorch.org)
+Python3.5+ 、ImageCaptcha库(pip install captcha)、 Pytorch(参考官网http://pytorch.org)
+
+### 步骤二：生成验证码
+
+```bash
+python generate.py
+```
+
+执行以上命令，会在目录 dataset/train/ 下生成多张验证码图片，图片已经标注好，数量可以是 1w、5w、10w，通过 generate.py 内的 `count` 参数设定
+
+### 步骤三：训练模型
+
+```bash
+ python train.py
+```
+
+使用步骤一生成的验证码图集合用CNN模型（在 catcha_cnn_model 中定义）进行训练，训练完成会生成文件 model.pkl
+
+### 步骤四：测试模型
+
+```bash
+python evaluate.py
+```
+
+可以在控制台，看到模型的准确率（如 95%） ，如果准确率较低，回到步骤一，生成更多的图片集合再次训练
+
+### 步骤五：使用模型做预测
+
+```bash
+python predict.py
+```
+
+ 可以在控制台，看到预测输出的结果
 
 
-- __步骤二：生成验证码__
-    ```bash
-    python generate.py
-    ```
-    执行以上命令，会在目录 dataset/train/ 下生成多张验证码图片，图片已经标注好，数量可以是 1w、5w、10w，通过 generate.py 内的 `count` 参数设定
-    
-- __步骤三：训练模型__
-    ```bash
-    python train.py
-    ```
-    使用步骤一生成的验证码图集合用CNN模型（在 catcha_cnn_model 中定义）进行训练，训练完成会生成文件 model.pkl
-
-- __步骤四：测试模型__
-    ```bash
-    python evaluate.py
-    ```
-    可以在控制台，看到模型的准确率（如 95%） ，如果准确率较低，回到步骤一，生成更多的图片集合再次训练
-
-- __步骤五：使用模型做预测__
-    ```bash
-    python predict.py
-    ```
-    可以在控制台，看到预测输出的结果
-    
 ## 作者
 ---
 
 * __Dee Qiu__ (coolcooldee@gmail.com)
 * __Germey__ (cqc@cuiqingcai.com)
+
+
+## Eight_Eggs有话说
+---
+
+修改了一部分源码，以使用GPU而不是CPU进行学习。我的电脑配置为 `Intel i7-10875H` + `Nvidia RTX2060 Laptop`。
+
+训练15个Epoch时正确率在 **50%** 左右，之后在 **40%~70%** 之间波动，最后训练了64个Epoch，正确率为 **60%**。
+
+由于本人在机器学习方面能力有限，不知道正确率无法提升的问题所在，也无法对模型及参数作进一步优化，但欢迎提出建议和PR。
