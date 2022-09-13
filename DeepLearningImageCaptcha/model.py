@@ -34,6 +34,7 @@ class CNN(nn.Module):
         )
 
     def forward(self, x):
+        x = x.cuda()
         out = self.layer1(x)
         out = self.layer2(out)
         out = self.layer3(out)

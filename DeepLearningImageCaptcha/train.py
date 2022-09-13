@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -5,13 +6,15 @@ import dataset
 from model import CNN
 from evaluate import main as evaluate
 
-num_epochs = 30
-batch_size = 100
+num_epochs = 64
+batch_size = 128
 learning_rate = 0.001
 
 
 def main():
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
     cnn = CNN()
+    cnn.cuda()
     cnn.train()
 
     criterion = nn.MultiLabelSoftMarginLoss()
@@ -21,8 +24,8 @@ def main():
     train_dataloader = dataset.get_train_data_loader()
     for epoch in range(num_epochs):
         for i, (images, labels) in enumerate(train_dataloader):
-            images = Variable(images)
-            labels = Variable(labels.float())
+            images = Variable(images).cuda()
+            labels = Variable(labels.float()).cuda()
             predict_labels = cnn(images)
             loss = criterion(predict_labels, labels)
             optimizer.zero_grad()

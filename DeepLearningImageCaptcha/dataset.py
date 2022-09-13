@@ -27,16 +27,16 @@ class mydataset(Dataset):
 
 
 transform = transforms.Compose([
-    # transforms.ColorJitter(),
-    transforms.Grayscale(),
+    transforms.ColorJitter(),
     transforms.ToTensor(),
-    # transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    transforms.Grayscale(1),
+    transforms.Normalize(mean=0.5, std=0.5)
 ])
 
 
 def get_train_data_loader():
     dataset = mydataset(setting.TRAIN_DATASET_PATH, transform=transform)
-    return DataLoader(dataset, batch_size=64, shuffle=True)
+    return DataLoader(dataset, batch_size=64, num_workers=4, shuffle=True)
 
 
 def get_eval_data_loader():

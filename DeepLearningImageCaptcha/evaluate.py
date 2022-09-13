@@ -8,7 +8,7 @@ import encoding
 
 
 def main():
-    cnn = CNN()
+    cnn = CNN().cuda()
     cnn.eval()
     cnn.load_state_dict(torch.load('model.pkl'))
     print("load cnn net.")
@@ -19,19 +19,19 @@ def main():
     total = 0
     for i, (images, labels) in enumerate(eval_dataloader):
         image = images
-        vimage = Variable(image)
-        predict_label = cnn(vimage)
+        vimage = Variable(image).cuda()
+        predict_label = cnn(vimage).cuda()
 
         c0 = setting.ALL_CHAR_SET[np.argmax(
-            predict_label[0, 0:setting.ALL_CHAR_SET_LEN].data.numpy())]
+            predict_label[0, 0:setting.ALL_CHAR_SET_LEN].cpu().data.numpy())]
         c1 = setting.ALL_CHAR_SET[np.argmax(
-            predict_label[0, setting.ALL_CHAR_SET_LEN:2 * setting.ALL_CHAR_SET_LEN].data.numpy())]
+            predict_label[0, setting.ALL_CHAR_SET_LEN:2 * setting.ALL_CHAR_SET_LEN].cpu().data.numpy())]
         c2 = setting.ALL_CHAR_SET[np.argmax(
-            predict_label[0, 2 * setting.ALL_CHAR_SET_LEN:3 * setting.ALL_CHAR_SET_LEN].data.numpy())]
+            predict_label[0, 2 * setting.ALL_CHAR_SET_LEN:3 * setting.ALL_CHAR_SET_LEN].cpu().data.numpy())]
         c3 = setting.ALL_CHAR_SET[np.argmax(
-            predict_label[0, 3 * setting.ALL_CHAR_SET_LEN:4 * setting.ALL_CHAR_SET_LEN].data.numpy())]
+            predict_label[0, 3 * setting.ALL_CHAR_SET_LEN:4 * setting.ALL_CHAR_SET_LEN].cpu().data.numpy())]
         predict_label = '%s%s%s%s' % (c0, c1, c2, c3)
-        true_label = encoding.decode(labels.numpy()[0])
+        true_label = encoding.decode(labels.cpu().numpy()[0])
         total += labels.size(0)
         if (predict_label == true_label):
             correct += 1
