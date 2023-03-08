@@ -3,5 +3,10 @@
 .userdata
 *.pyc
 
+__pycache__/
+logs/
 results/
 dataset/
+data/
+captcha/
+weights/
